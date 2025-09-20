@@ -167,6 +167,9 @@ class PlayState extends FlxState
 			FileSystem.deleteFile('assets/lists/' + data.id + '.json');
 			trace('Deleted list: ' + data.id);
 
+			if (lists[sel] == null)
+				sel--;
+			
 			data = new TodoData(lists[sel]);
 			fileIcon.append = DELETE;
 			fileIcon.alpha = 1;
