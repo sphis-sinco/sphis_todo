@@ -28,6 +28,7 @@ class PlayState extends FlxState
 	public var listName:FlxText;
 
 	public var listEntriesText:FlxTypedGroup<FlxText>;
+	public var listEntriesCheckbox:FlxTypedGroup<Checkbox>;
 
 	public var selected:Int = 0;
 
@@ -88,6 +89,10 @@ class PlayState extends FlxState
 			txt.ID = i;
 			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
+
+			var checkbox:Checkbox = new Checkbox(data.entry_values[i], txt.x, txt.y);
+			txt.x += checkbox.width + 32;
+			listEntriesCheckbox.add(checkbox);
 
 			i++;
 		}
