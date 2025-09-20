@@ -200,7 +200,8 @@ class PlayState extends FlxState
 			txt.x += checkbox.width + 32;
 			listEntriesCheckbox.add(checkbox);
 
-			trace('Added entry #' + (i + 1) + '. State: ' + data.entry_values[i]);
+			if (is_new)
+				trace('Added entry #' + (i + 1) + '. State: ' + data.entry_values[i]);
 
 			i++;
 		}
