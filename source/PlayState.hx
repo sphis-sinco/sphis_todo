@@ -46,7 +46,10 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		if (selected < 0)
+			selected = 0;
 	}
+
 	function updateListEntriesText()
 	{
 		for (text in listEntriesText.members)
@@ -58,8 +61,9 @@ class PlayState extends FlxState
 		var i = 0;
 		for (entry in data.entry_names)
 		{
-			var txt:FlxText = new FlxText(32, 32, 0, entry, 16);
+			var txt:FlxText = new FlxText(32, 32, 0, entry, 64);
 			txt.ID = i;
+			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
 
 			i++;
