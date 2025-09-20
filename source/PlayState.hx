@@ -160,19 +160,22 @@ class PlayState extends FlxState
 	{
 		data = new TodoData(data.id);
 
-		for (text in listEntriesText.members)
+		if (listEntriesText.members.length > 0)
 		{
-			listEntriesText.members.remove(text);
-			text.destroy();
-		}
-		for (checkbox in listEntriesCheckbox.members)
-		{
-			listEntriesCheckbox.members.remove(checkbox);
-			checkbox.destroy();
-		}
+			for (text in listEntriesText.members)
+			{
+				listEntriesText.members.remove(text);
+				text.destroy();
+			}
+			for (checkbox in listEntriesCheckbox.members)
+			{
+				listEntriesCheckbox.members.remove(checkbox);
+				checkbox.destroy();
+			}
 
-		listEntriesText.clear();
-		listEntriesCheckbox.clear();
+			listEntriesText.clear();
+			listEntriesCheckbox.clear();
+		}
 
 		trace(data.entry_names.length + ' entries');
 
