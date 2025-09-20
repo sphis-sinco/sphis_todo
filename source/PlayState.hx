@@ -174,6 +174,8 @@ class PlayState extends FlxState
 		listEntriesText.clear();
 		listEntriesCheckbox.clear();
 
+		trace(data.entry_names.length + ' entries');
+
 		var i = 0;
 		for (entry in data.entry_names)
 		{
