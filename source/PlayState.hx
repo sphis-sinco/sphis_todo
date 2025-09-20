@@ -47,6 +47,9 @@ class PlayState extends FlxState
 		listEntriesText = new FlxTypedGroup<FlxText>();
 		add(listEntriesText);
 
+		listEntriesCheckbox = new FlxTypedGroup<Checkbox>();
+		add(listEntriesCheckbox);
+
 		updateListEntriesText();
 		FlxG.camera.follow(camFollow, LOCKON, .45);
 		camFollow.x = FlxG.width / 4;
@@ -90,16 +93,9 @@ class PlayState extends FlxState
 			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
 
-			try
-			{
 			var checkbox:Checkbox = new Checkbox(data.entry_values[i], txt.x, txt.y);
 			txt.x += checkbox.width + 32;
-				listEntriesCheckbox.add(checkbox);
-			}
-			catch (e)
-			{
-				trace(e.message);
-			}
+			listEntriesCheckbox.add(checkbox);
 
 			i++;
 		}
