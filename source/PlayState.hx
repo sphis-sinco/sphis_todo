@@ -37,22 +37,7 @@ class PlayState extends FlxState
 		super.create();
 
 		#if sys
-		lists = [];
-		for (list in FileSystem.readDirectory('assets/lists/'))
-		{
-			if (StringTools.endsWith(list, '.json') && !FileSystem.isDirectory('assets/lists/' + list))
-			{
-				lists.push(StringTools.replace(list, '.json', ''));
-				trace('New list: ' + lists[lists.length - 1]);
-			}
-		}
-		if (lists == [] || lists == null)
-		{
-			File.saveContent('assets/lists/dummy.json',
-				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
-			lists.push('dummy');
-		}
-		data = new TodoData(lists[0]);
+		sysReload();
 		#end
 
 		listName = new FlxText();
@@ -78,6 +63,28 @@ class PlayState extends FlxState
 		camFollow.x = FlxG.width / 4;
 	}
 
+	#if sys
+	function sysReload()
+	{
+		lists = [];
+		for (list in FileSystem.readDirectory('assets/lists/'))
+		{
+			if (StringTools.endsWith(list, '.json') && !FileSystem.isDirectory('assets/lists/' + list))
+			{
+				lists.push(StringTools.replace(list, '.json', ''));
+				trace('New list: ' + lists[lists.length - 1]);
+			}
+		}
+		if (lists == [] || lists == null)
+		{
+			File.saveContent('assets/lists/dummy.json',
+				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+			lists.push('dummy');
+		}
+		data = new TodoData(lists[0]);
+	}
+	#end
+
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -87,6 +94,10 @@ class PlayState extends FlxState
 			selected = listEntriesText.members.length - 1;
 		if (FlxG.keys.justReleased.R)
 		{
+			#if sys
+			sysReload();
+			#end
+
 			data = new TodoData(data.id);
 			updateListEntriesText(true);
 		}
@@ -116,6 +127,26 @@ class PlayState extends FlxState
 				camFollow.y = text.y;
 			}
 		}
+		if (FlxG.keys.justReleased.ESCAPE)
+		{
+			var sel = lists.indexOf(data.id);
+			#if sys
+			var randomNum = 'new_list_' + FlxG.random.int();
+			File.saveContent('assets/lists/' + randomNum + '.json',
+				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+			lists.push('' + randomNum);
+			trace('Added new list: ' + randomNum);
+
+			data = new TodoData(lists[sel]);
+			fileIcon.append = NEW;
+			fileIcon.alpha = 1;
+			FlxTween.cancelTweensOf(fileIcon);
+			FlxTween.tween(fileIcon, {alpha: 0}, 1);
+
+			updateListEntriesText(true);
+			#end
+		}
+
 		if (FlxG.keys.justReleased.DELETE)
 		{
 			var sel = lists.indexOf(data.id);
