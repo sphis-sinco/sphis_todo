@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import haxe.Json;
 #if sys
@@ -62,7 +63,7 @@ class PlayState extends FlxState
 
 		fileIcon = new FileIcon(NEW, 16, FlxG.height - 256);
 		fileIcon.scrollFactor.set();
-		fileIcon.visible = false;
+		fileIcon.alpha = 0;
 		add(fileIcon);
 
 		listEntriesText = new FlxTypedGroup<FlxText>();
@@ -150,7 +151,13 @@ class PlayState extends FlxState
 			data = new TodoData(lists[sel]);
 			trace(data.id);
 			if (data.id != prevData.id)
+			{
+				fileIcon.append = SWAP;
+				fileIcon.alpha = 1;
+				FlxTween.tween(fileIcon, {alpha: 0}, 1);
+				
 				updateListEntriesText(true);
+			}
 		}
 	}
 
@@ -160,7 +167,7 @@ class PlayState extends FlxState
 			trace('Loading list: ' + data.id);
 		else
 			trace('Reloading list: ' + data.id);
-		
+
 		if (listEntriesText.members.length > 0)
 		{
 			for (text in listEntriesText.members)
