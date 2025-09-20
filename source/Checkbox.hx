@@ -37,10 +37,10 @@ class Checkbox extends FlxSprite
 	}
 }
 
-enum CheckboxStates
+enum abstract CheckboxStates(String)
 {
-	NA;
-	NOT_STARTED;
-	WORKING;
-	DONE;
+	var NA = 'NA';
+	var NOT_STARTED = 'NOT_STARTED';
+	var WORKING = 'WORKING';
+	var DONE = 'DONE';
 }
