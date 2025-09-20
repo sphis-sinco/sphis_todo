@@ -290,7 +290,7 @@ class PlayState extends FlxState
 		{
 			listName.text = data.id;
 
-			if (data.entry_names.length < 1)
+			if (data.entries.length < 1)
 				listName.text += ' (EMPTY)';
 		}
 	}

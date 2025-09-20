@@ -38,7 +38,7 @@ class TodoData
 		this.entries = json.entries;
 		this.entry_names = json.entry_names;
 		this.entry_values = json.entry_values;
-		if ((this.entries == null || this.entries == []) && (this.entry_names != null || this.entry_names != []))
+		if (this.entries.length < this.entry_names.length)
 		{
 			var i = 0;
 			for (name in this.entry_names)
@@ -47,6 +47,8 @@ class TodoData
 					name: name ?? 'null_entry_' + i,
 					value: this?.entry_values[i] ?? NA
 				});
+
+				trace('Moved entry_name: ' + this.entries[this.entries.length - 1] + ' to entries');
 
 				i++;
 			}
