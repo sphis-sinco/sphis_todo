@@ -9,11 +9,14 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import haxe.Json;
 #if sys
+import sys.FileSystem;
 import sys.io.File;
 #end
 
 class PlayState extends FlxState
 {
+	public var lists = ['dummy'];
+
 	public var data(default, set):TodoData = new TodoData('dummy');
 
 	function set_data(value:TodoData):TodoData
@@ -40,6 +43,21 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		#if sys
+		lists = [];
+		for (list in FileSystem.readDirectory('assets/lists/'))
+		{
+			if (StringTools.endsWith(list, '.json') && !FileSystem.isDirectory('assets/lists/' + list))
+				lists.push(StringTools.replace(list, '.json', ''));
+		}
+		if (lists == [] || lists == null)
+		{
+			File.saveContent('assets/lists/dummy.json',
+				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+			lists.push('dummy');
+		}
+		#end
+
 		super.create();
 		listName = new FlxText();
 		listName.scrollFactor.set(0, 0);
@@ -106,6 +124,26 @@ class PlayState extends FlxState
 			FlxG.camera.zoom = .5;
 		if (FlxG.camera.zoom > 1)
 			FlxG.camera.zoom = 1;
+		if (FlxG.keys.anyJustReleased([LEFT, RIGHT]))
+		{
+			var sel = lists.indexOf(data.id);
+
+			if (lists.length > 1)
+			{
+				if (FlxG.keys.justReleased.LEFT)
+					sel--;
+				if (FlxG.keys.justReleased.RIGHT)
+					sel++;
+
+				if (sel < 0)
+					sel = 0;
+				if (sel >= lists.length)
+					sel = lists.length - 1;
+
+				data = new TodoData(lists[sel]);
+				updateListEntriesText();
+			}
+		}
 	}
 
 	function updateListEntriesText()
