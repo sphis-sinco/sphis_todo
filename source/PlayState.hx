@@ -54,6 +54,8 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		if (selected < 0)
 			selected = 0;
+		if (selected >= listEntriesText.members.length)
+			selected = listEntriesText.members.length - 1;
 	}
 
 	function updateListEntriesText()
