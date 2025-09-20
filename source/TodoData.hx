@@ -3,6 +3,9 @@ package;
 import Checkbox.CheckboxStates;
 import json2object.JsonParser;
 import lime.utils.Assets;
+#if sys
+import sys.io.File;
+#end
 
 class TodoData
 {
@@ -18,7 +21,9 @@ class TodoData
 	public function new(id:String)
 	{
 		var parser = new JsonParser<TodoData>();
-		var json = parser.fromJson(Assets.getText('assets/lists/' + id + '.json'));
+		var path = 'assets/lists/' + id + '.json';
+		var data = #if sys File.getContent(path) #else Assets.getText(path) #end;
+		var json = parser.fromJson(data);
 
 		if (json == null)
 			throw 'Error parsing TODO list: ' + id;
