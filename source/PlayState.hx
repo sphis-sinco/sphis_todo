@@ -134,8 +134,9 @@ class PlayState extends FlxState
 			var randomNum = 'new_list_' + FlxG.random.int();
 			File.saveContent('assets/lists/' + randomNum + '.json',
 				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
-			lists.push('' + randomNum);
+			lists.push(randomNum);
 			trace('Added new list: ' + randomNum);
+			sel = lists.indexOf(randomNum);
 
 			data = new TodoData(lists[sel]);
 			fileIcon.append = NEW;
