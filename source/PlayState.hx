@@ -4,6 +4,8 @@ import flixel.FlxState;
 
 class PlayState extends FlxState
 {
+	public var data:TodoData;
+
 	override public function create()
 	{
 		super.create();
