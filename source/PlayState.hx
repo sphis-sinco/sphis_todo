@@ -91,6 +91,15 @@ class PlayState extends FlxState
 			selected--;
 		if (FlxG.keys.justReleased.DOWN)
 			selected++;
+		if (FlxG.keys.justReleased.E)
+			FlxG.camera.zoom -= .25;
+		if (FlxG.keys.justReleased.Q)
+			FlxG.camera.zoom += .25;
+
+		if (FlxG.camera.zoom < .5)
+			FlxG.camera.zoom = .5;
+		if (FlxG.camera.zoom > 1)
+			FlxG.camera.zoom = 1;
 	}
 
 	function updateListEntriesText()
