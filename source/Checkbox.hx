@@ -18,7 +18,7 @@ class Checkbox extends FlxSprite
 		else
 		{
 			if (value != NA)
-				trace('Unimplemented state case: '+value.getName());
+				trace('Unimplemented state case: ' + value);
                         
 			color = FlxColor.WHITE;
 		}
