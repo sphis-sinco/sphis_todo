@@ -10,9 +10,14 @@ import sys.io.File;
 class TodoData
 {
 	@:default([])
+	public var entries:Array<{name:String, value:CheckboxStates}> = [];
+
+	@:default([])
+	@:optional
 	public var entry_names:Array<String> = [];
 
 	@:default([])
+	@:optional
 	public var entry_values:Array<CheckboxStates> = [];
 
 	@:jignored
@@ -30,12 +35,27 @@ class TodoData
 
 		this.id = id;
 
+		this.entries = json.entries;
 		this.entry_names = json.entry_names;
 		this.entry_values = json.entry_values;
+		if ((this.entries == null || this.entries == []) && (this.entry_names != null || this.entry_names != []))
+		{
+			var i = 0;
+			for (name in this.entry_names)
+			{
+				this.entries.push({
+					name: name ?? 'null_entry_' + i,
+					value: this?.entry_values[i] ?? NA
+				});
+
+				i++;
+			}
+		}
+		
 	}
 
 	public function toString():String
 	{
-		return 'TodoData(id:' + id + ', entry_names: ' + entry_names + ', entry_values: ' + entry_values + ')';
+		return 'TodoData(id:' + id + ', entries:' + entries + ')';
 	}
 }
