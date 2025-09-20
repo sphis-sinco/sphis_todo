@@ -118,8 +118,6 @@ class PlayState extends FlxState
 		if (FlxG.keys.justReleased.DELETE)
 		{
 			var sel = lists.indexOf(data.id);
-			var prevData = new TodoData(data.id);
-
 			#if sys
 			if (lists.length > 1)
 			{
@@ -140,17 +138,16 @@ class PlayState extends FlxState
 			}
 
 			FileSystem.deleteFile('assets/lists/' + data.id + '.json');
+			lists.remove(data.id);
+			trace('Deleted list: ' + data.id);
 
 			data = new TodoData(lists[sel]);
-			if (data.id != prevData.id)
-			{
-				fileIcon.append = DELETE;
-				fileIcon.alpha = 1;
-				FlxTween.cancelTweensOf(fileIcon);
-				FlxTween.tween(fileIcon, {alpha: 0}, 1);
+			fileIcon.append = DELETE;
+			fileIcon.alpha = 1;
+			FlxTween.cancelTweensOf(fileIcon);
+			FlxTween.tween(fileIcon, {alpha: 0}, 1);
 
-				updateListEntriesText(true);
-			}
+			updateListEntriesText(true);
 			#end
 		}
 		if (FlxG.keys.justReleased.UP)
