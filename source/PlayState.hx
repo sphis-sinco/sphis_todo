@@ -1,5 +1,7 @@
 package;
 
+import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -28,6 +30,8 @@ class PlayState extends FlxState
 
 	public var selected:Int = 0;
 
+	public var camFollow:FlxObject = new FlxObject();
+
 	override public function create()
 	{
 		super.create();
@@ -40,7 +44,9 @@ class PlayState extends FlxState
 
 		listEntriesText = new FlxTypedGroup<FlxText>();
 		add(listEntriesText);
+
 		updateListEntriesText();
+		FlxG.camera.follow(camFollow, LOCKON, .5);
 	}
 
 	override public function update(elapsed:Float)
