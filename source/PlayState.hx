@@ -82,7 +82,7 @@ class PlayState extends FlxState
 		listEntriesCheckbox = new FlxTypedGroup<Checkbox>();
 		add(listEntriesCheckbox);
 
-		updateListEntriesText();
+		updateListEntriesText(true);
 		FlxG.camera.follow(camFollow, LOCKON, .45);
 		camFollow.x = FlxG.width / 4;
 	}
@@ -97,7 +97,7 @@ class PlayState extends FlxState
 		if (FlxG.keys.justReleased.R)
 		{
 			data = new TodoData(data.id);
-			updateListEntriesText();
+			updateListEntriesText(true);
 		}
 		if (FlxG.keys.justReleased.ENTER)
 		{
@@ -155,13 +155,18 @@ class PlayState extends FlxState
 					sel = lists.length - 1;
 
 				data = new TodoData(lists[sel]);
-				updateListEntriesText();
+				updateListEntriesText(true);
 			}
 		}
 	}
 
-	function updateListEntriesText()
+	function updateListEntriesText(is_new:Bool = false)
 	{
+		if (is_new)
+			trace('Loading list: ' + data.id);
+		else
+			trace('Reloading list: ' + data.id);
+		
 		if (listEntriesText.members.length > 0)
 		{
 			for (text in listEntriesText.members)
@@ -179,7 +184,8 @@ class PlayState extends FlxState
 			listEntriesCheckbox.clear();
 		}
 
-		trace(data.entry_names.length + ' entries');
+		if (is_new)
+			trace(data.entry_names.length + ' entries');
 
 		var i = 0;
 		for (entry in data.entry_names)
@@ -194,7 +200,7 @@ class PlayState extends FlxState
 			txt.x += checkbox.width + 32;
 			listEntriesCheckbox.add(checkbox);
 
-			trace('Added entry #' + (i + 1) + '. State: ' + checkbox.state);
+			trace('Added entry #' + (i + 1) + '. State: ' + data.entry_values[i]);
 
 			i++;
 		}
