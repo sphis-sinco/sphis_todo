@@ -19,7 +19,7 @@ class PlayState extends FlxState
 {
 	public var lists = ['dummy'];
 
-	public var data:TodoData = new TodoData('dummy');
+	public var data:TodoData;
 
 	public var listName:FlxText;
 
@@ -38,6 +38,8 @@ class PlayState extends FlxState
 
 		#if sys
 		sysReload();
+		#else
+		data = new TodoData('dummy');
 		#end
 
 		listName = new FlxText();
