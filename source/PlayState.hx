@@ -62,6 +62,22 @@ class PlayState extends FlxState
 			selected = 0;
 		if (selected >= listEntriesText.members.length)
 			selected = listEntriesText.members.length - 1;
+		if (FlxG.keys.justReleased.ENTER)
+		{
+			switch (data.entry_values[selected])
+			{
+				case NOT_STARTED:
+					data.entry_values[selected] = WORKING;
+				case WORKING:
+					data.entry_values[selected] = DONE;
+				case DONE:
+					data.entry_values[selected] = NA;
+				default:
+					data.entry_values[selected] = NOT_STARTED;
+			}
+
+			updateListEntriesText();
+		}
 		for (text in listEntriesText.members)
 		{
 			text.color = FlxColor.WHITE;
