@@ -100,11 +100,19 @@ class PlayState extends FlxState
 			listEntriesText.members.remove(text);
 			text.destroy();
 		}
+		for (checkbox in listEntriesCheckbox.members)
+		{
+			listEntriesCheckbox.members.remove(checkbox);
+			checkbox.destroy();
+		}
+
+		listEntriesText.clear();
+		listEntriesCheckbox.clear();
 
 		var i = 0;
 		for (entry in data.entry_names)
 		{
-			var txt:FlxText = new FlxText(32, 32, 0, entry + '(' + data.entry_values[i] + ')', 16);
+			var txt:FlxText = new FlxText(32, 32, 0, entry + ' (' + data.entry_values[i] + ')', 16);
 			txt.ID = i;
 			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
