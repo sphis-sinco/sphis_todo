@@ -7,6 +7,10 @@ import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import haxe.Json;
+#if sys
+import sys.io.File;
+#end
 
 class PlayState extends FlxState
 {
@@ -133,5 +137,8 @@ class PlayState extends FlxState
 
 			i++;
 		}
+		#if sys
+		File.saveContent('assets/lists/' + data.id + '.json', Json.stringify(data));
+		#end
 	}
 }
