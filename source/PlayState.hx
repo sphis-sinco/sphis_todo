@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
@@ -46,7 +47,8 @@ class PlayState extends FlxState
 		add(listEntriesText);
 
 		updateListEntriesText();
-		FlxG.camera.follow(camFollow, LOCKON, .5);
+		FlxG.camera.follow(camFollow, LOCKON, .45);
+		camFollow.x = FlxG.width / 4;
 	}
 
 	override public function update(elapsed:Float)
@@ -56,6 +58,15 @@ class PlayState extends FlxState
 			selected = 0;
 		if (selected >= listEntriesText.members.length)
 			selected = listEntriesText.members.length - 1;
+		for (text in listEntriesText.members)
+		{
+			text.color = FlxColor.WHITE;
+			if (selected == text.ID)
+			{
+				text.color = FlxColor.YELLOW;
+				camFollow.y = text.y;
+			}
+		}
 	}
 
 	function updateListEntriesText()
@@ -69,7 +80,7 @@ class PlayState extends FlxState
 		var i = 0;
 		for (entry in data.entry_names)
 		{
-			var txt:FlxText = new FlxText(32, 32, 0, entry, 64);
+			var txt:FlxText = new FlxText(32, 32, 0, entry, 16);
 			txt.ID = i;
 			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
