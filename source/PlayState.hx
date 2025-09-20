@@ -113,6 +113,7 @@ class PlayState extends FlxState
 					data.entry_values[selected] = NOT_STARTED;
 			}
 
+			trace('Entry ' + (selected + 1) + ' status update to: ' + data.entry_values[selected]);
 			updateListEntriesText();
 		}
 		for (text in listEntriesText.members)
