@@ -1,0 +1,9 @@
+{
+        "entry_names": [
+                "Entry Name 1",
+                "Entry Name 2",
+                "Entry Name 3",
+                "Entry Name 4"
+        ],
+        "entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]
+}
