@@ -67,6 +67,10 @@ class PlayState extends FlxState
 				camFollow.y = text.y;
 			}
 		}
+		if (FlxG.keys.justReleased.UP)
+			selected--;
+		if (FlxG.keys.justReleased.DOWN)
+			selected++;
 	}
 
 	function updateListEntriesText()
