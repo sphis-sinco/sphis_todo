@@ -28,6 +28,8 @@ class PlayState extends FlxState
 
 	public var camFollow:FlxObject = new FlxObject();
 
+	public var fileIcon:FileIcon;
+
 	override public function create()
 	{
 		super.create();
@@ -57,6 +59,11 @@ class PlayState extends FlxState
 		listName.size = 32;
 		listName.text = data.id;
 		add(listName);
+
+		fileIcon = new FileIcon(NEW, 16, FlxG.height - 256);
+		fileIcon.scrollFactor.set();
+		fileIcon.visible = false;
+		add(fileIcon);
 
 		listEntriesText = new FlxTypedGroup<FlxText>();
 		add(listEntriesText);
