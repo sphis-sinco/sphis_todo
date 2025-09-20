@@ -9,7 +9,7 @@ class FileIcon extends FlxSprite
 
 	function set_append(value:FileIconAppends):FileIconAppends
 	{
-		loadGraphic('assets/ui/File'+value);
+		loadGraphic('assets/ui/File' + value + '.png');
 		scale.set(.5, .5);
 		updateHitbox();
 
