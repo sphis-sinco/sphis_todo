@@ -90,9 +90,16 @@ class PlayState extends FlxState
 			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
 
+			try
+			{
 			var checkbox:Checkbox = new Checkbox(data.entry_values[i], txt.x, txt.y);
 			txt.x += checkbox.width + 32;
-			listEntriesCheckbox.add(checkbox);
+				listEntriesCheckbox.add(checkbox);
+			}
+			catch (e)
+			{
+				trace(e.message);
+			}
 
 			i++;
 		}
