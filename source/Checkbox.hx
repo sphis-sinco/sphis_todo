@@ -33,6 +33,7 @@ class Checkbox extends FlxSprite
 		state = State;
 
 		loadGraphic('assets/ui/checkbox.png');
+		scale.set(.5, .5);
 		updateHitbox();
 	}
 }
