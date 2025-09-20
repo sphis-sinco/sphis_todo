@@ -66,6 +66,8 @@ class PlayState extends FlxState
 			selected = 0;
 		if (selected >= listEntriesText.members.length)
 			selected = listEntriesText.members.length - 1;
+		if (FlxG.keys.justReleased.R)
+			updateListEntriesText();
 		if (FlxG.keys.justReleased.ENTER)
 		{
 			switch (data.entry_values[selected])
