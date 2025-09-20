@@ -1,5 +1,6 @@
 package;
 
+import Checkbox.CheckboxStates;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -17,6 +18,20 @@ import sys.io.File;
 
 class PlayState extends FlxState
 {
+	public static var dummyJson(get, never):String;
+
+	static function get_dummyJson():String
+	{
+		return Json.stringify({
+			entries: [
+				{name: "Entry Name 1", value: CheckboxStates.NA},
+				{name: "Entry Name 2", value: CheckboxStates.NOT_STARTED},
+				{name: "Entry Name 3", value: CheckboxStates.WORKING},
+				{name: "Entry Name 4", value: CheckboxStates.DONE}
+			]
+		});
+	}
+
 	public var lists = ['dummy'];
 
 	public var data:TodoData;
@@ -79,8 +94,7 @@ class PlayState extends FlxState
 		}
 		if (lists == [] || lists == null)
 		{
-			File.saveContent('assets/lists/dummy.json',
-				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+			File.saveContent('assets/lists/dummy.json', dummyJson);
 			lists.push('dummy');
 		}
 		data = new TodoData(lists[0]);
@@ -134,8 +148,7 @@ class PlayState extends FlxState
 			var sel = lists.indexOf(data.id);
 			#if sys
 			var randomNum = 'new_list_' + FlxG.random.int();
-			File.saveContent('assets/lists/' + randomNum + '.json',
-				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+			File.saveContent('assets/lists/' + randomNum + '.json', dummyJson);
 			lists.push(randomNum);
 			trace('Added new list: ' + randomNum);
 			sel = lists.indexOf(randomNum);
@@ -157,8 +170,7 @@ class PlayState extends FlxState
 			if ((lists.length - 1) < 1)
 			{
 				var randomNum = FlxG.random.int();
-				File.saveContent('assets/lists/' + randomNum + '.json',
-					'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+				File.saveContent('assets/lists/' + randomNum + '.json', dummyJson);
 				lists.push('' + randomNum);
 				trace('Added dummy list: ' + randomNum);
 			}
@@ -169,7 +181,7 @@ class PlayState extends FlxState
 
 			if (lists[sel] == null)
 				sel--;
-			
+
 			data = new TodoData(lists[sel]);
 			fileIcon.append = DELETE;
 			fileIcon.alpha = 1;
@@ -251,23 +263,23 @@ class PlayState extends FlxState
 		}
 
 		if (is_new)
-			trace(data.entry_names.length + ' entries');
+			trace(data.entries.length + ' entries');
 
 		var i = 0;
-		for (entry in data.entry_names)
+		for (entry in data.entries)
 		{
-			var txt:FlxText = new FlxText(32, 32, 0, entry + ' (' + data.entry_values[i] + ')', 16);
+			var txt:FlxText = new FlxText(32, 32, 0, entry.name + ' (' + entry.value + ')', 16);
 			txt.ID = i;
 			txt.y = 32 + i * 128;
 			listEntriesText.add(txt);
 
-			var checkbox:Checkbox = new Checkbox(data.entry_values[i], txt.x, txt.y);
+			var checkbox:Checkbox = new Checkbox(entry.value, txt.x, txt.y);
 			checkbox.y = txt.y - (checkbox.height / 2);
 			txt.x += checkbox.width + 32;
 			listEntriesCheckbox.add(checkbox);
 
 			if (is_new)
-				trace('Added entry #' + (i + 1) + '. State: ' + data.entry_values[i]);
+				trace('Added entry #' + (i + 1) + '. State: ' + entry.value);
 
 			i++;
 		}
