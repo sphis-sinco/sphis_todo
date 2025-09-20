@@ -38,7 +38,7 @@ class PlayState extends FlxState
 		super.create();
 		listName = new FlxText();
 		listName.scrollFactor.set(0, 0);
-		listName.setPosition(32, 32);
+		listName.setPosition(16, 32);
 		listName.size = 32;
 		listName.text = data.id;
 		add(listName);
