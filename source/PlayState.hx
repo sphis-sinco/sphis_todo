@@ -5,6 +5,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -119,26 +120,17 @@ class PlayState extends FlxState
 		{
 			var sel = lists.indexOf(data.id);
 			#if sys
-			if (lists.length > 1)
+			if ((lists.length - 1) < 1)
 			{
-				if (sel < 1)
-					sel++;
-				else
-					sel--;
-
-				if (sel >= lists.length)
-					sel--;
-			}
-			else
-			{
-				File.saveContent('assets/lists/dummy.json',
+				var randomNum = FlxG.random.int();
+				File.saveContent('assets/lists/' + randomNum + '.json',
 					'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
-				lists.push('dummy');
-				sel = 0;
+				lists.push('' + randomNum);
+				trace('Added dummy list: ' + randomNum);
 			}
+			lists.remove(data.id);
 
 			FileSystem.deleteFile('assets/lists/' + data.id + '.json');
-			lists.remove(data.id);
 			trace('Deleted list: ' + data.id);
 
 			data = new TodoData(lists[sel]);
