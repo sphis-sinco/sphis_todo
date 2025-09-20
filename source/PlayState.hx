@@ -48,6 +48,9 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		super.create();
+
+		
 		#if sys
 		lists = [];
 		for (list in FileSystem.readDirectory('assets/lists/'))
@@ -61,9 +64,9 @@ class PlayState extends FlxState
 				'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
 			lists.push('dummy');
 		}
+		data = new TodoData(lists[0]);
 		#end
 
-		super.create();
 		listName = new FlxText();
 		listName.scrollFactor.set(0, 0);
 		listName.setPosition(16, 32);
