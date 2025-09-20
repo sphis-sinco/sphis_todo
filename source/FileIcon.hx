@@ -5,23 +5,22 @@ import flixel.util.FlxColor;
 
 class FileIcon extends FlxSprite
 {
-	public var state(default, set):FileIconAppends = NEW;
+	public var append(default, set):FileIconAppends = NEW;
 
-	function set_state(value:FileIconAppends):FileIconAppends
+	function set_append(value:FileIconAppends):FileIconAppends
 	{
 		loadGraphic('assets/ui/File'+value);
+		scale.set(.5, .5);
+		updateHitbox();
 
 		return value;
 	}
 
-	override public function new(State:FileIconAppends, ?X:Float = 0, ?Y:Float = 0)
+	override public function new(Append:FileIconAppends, ?X:Float = 0, ?Y:Float = 0)
 	{
 		super(X, Y);
 
-		state = State;
-
-		scale.set(.5, .5);
-		updateHitbox();
+		append = Append;
 	}
 }
 
