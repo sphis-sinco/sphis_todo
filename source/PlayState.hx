@@ -119,19 +119,19 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keys.justReleased.ENTER)
 		{
-			switch (data.entry_values[selected])
+			switch (data.entries[selected].value)
 			{
 				case NOT_STARTED:
-					data.entry_values[selected] = WORKING;
+					data.entries[selected].value = WORKING;
 				case WORKING:
-					data.entry_values[selected] = DONE;
+					data.entries[selected].value = DONE;
 				case DONE:
-					data.entry_values[selected] = NA;
+					data.entries[selected].value = NA;
 				default:
-					data.entry_values[selected] = NOT_STARTED;
+					data.entries[selected].value = NOT_STARTED;
 			}
 
-			trace('Entry ' + (selected + 1) + ' status update to: ' + data.entry_values[selected]);
+			trace('Entry ' + (selected + 1) + ' status update to: ' + data.entries[selected].value);
 			updateListEntriesText();
 		}
 		for (text in listEntriesText.members)
