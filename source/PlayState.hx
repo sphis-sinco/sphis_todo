@@ -22,7 +22,12 @@ class PlayState extends FlxState
 	function set_data(value:TodoData):TodoData
 	{
 		if (listName != null)
+		{
 			listName.text = value.id;
+
+			if (value.entry_names.length < 1)
+				listName.text += ' (EMPTY)';
+		}
 
 		if (listEntriesText != null)
 		{
@@ -148,6 +153,8 @@ class PlayState extends FlxState
 
 	function updateListEntriesText()
 	{
+		data = new TodoData(data.id);
+
 		for (text in listEntriesText.members)
 		{
 			listEntriesText.members.remove(text);
