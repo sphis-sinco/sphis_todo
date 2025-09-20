@@ -26,6 +26,8 @@ class PlayState extends FlxState
 
 	public var listEntriesText:FlxTypedGroup<FlxText>;
 
+	public var selected:Int = 0;
+
 	override public function create()
 	{
 		super.create();
@@ -38,6 +40,7 @@ class PlayState extends FlxState
 
 		listEntriesText = new FlxTypedGroup<FlxText>();
 		add(listEntriesText);
+		updateListEntriesText();
 	}
 
 	override public function update(elapsed:Float)
