@@ -50,13 +50,15 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		
 		#if sys
 		lists = [];
 		for (list in FileSystem.readDirectory('assets/lists/'))
 		{
 			if (StringTools.endsWith(list, '.json') && !FileSystem.isDirectory('assets/lists/' + list))
+			{
 				lists.push(StringTools.replace(list, '.json', ''));
+				trace('New list: ' + lists[lists.length - 1]);
+			}
 		}
 		if (lists == [] || lists == null)
 		{
