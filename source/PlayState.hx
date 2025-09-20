@@ -115,6 +115,44 @@ class PlayState extends FlxState
 				camFollow.y = text.y;
 			}
 		}
+		if (FlxG.keys.justReleased.DELETE)
+		{
+			var sel = lists.indexOf(data.id);
+			var prevData = new TodoData(data.id);
+
+			#if sys
+			if (lists.length > 1)
+			{
+				if (sel < 1)
+					sel++;
+				else
+					sel--;
+
+				if (sel >= lists.length)
+					sel--;
+			}
+			else
+			{
+				File.saveContent('assets/lists/dummy.json',
+					'{"entry_names": ["Entry Name 1","Entry Name 2","Entry Name 3","Entry Name 4"],"entry_values": ["NA", "NOT_STARTED", "WORKING", "DONE"]}');
+				lists.push('dummy');
+				sel = 0;
+			}
+
+			FileSystem.deleteFile('assets/lists/' + data.id + '.json');
+
+			data = new TodoData(lists[sel]);
+			if (data.id != prevData.id)
+			{
+				fileIcon.append = DELETE;
+				fileIcon.alpha = 1;
+				FlxTween.cancelTweensOf(fileIcon);
+				FlxTween.tween(fileIcon, {alpha: 0}, 1);
+
+				updateListEntriesText(true);
+			}
+			#end
+		}
 		if (FlxG.keys.justReleased.UP)
 			selected--;
 		if (FlxG.keys.justReleased.DOWN)
@@ -154,8 +192,9 @@ class PlayState extends FlxState
 			{
 				fileIcon.append = SWAP;
 				fileIcon.alpha = 1;
+				FlxTween.cancelTweensOf(fileIcon);
 				FlxTween.tween(fileIcon, {alpha: 0}, 1);
-				
+
 				updateListEntriesText(true);
 			}
 		}
