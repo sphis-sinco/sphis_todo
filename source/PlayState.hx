@@ -17,25 +17,7 @@ class PlayState extends FlxState
 {
 	public var lists = ['dummy'];
 
-	public var data(default, set):TodoData = new TodoData('dummy');
-
-	function set_data(value:TodoData):TodoData
-	{
-		if (listName != null)
-		{
-			listName.text = value.id;
-
-			if (value.entry_names.length < 1)
-				listName.text += ' (EMPTY)';
-		}
-
-		if (listEntriesText != null)
-		{
-			updateListEntriesText();
-		}
-
-		return value;
-	}
+	public var data:TodoData = new TodoData('dummy');
 
 	public var listName:FlxText;
 
@@ -141,6 +123,7 @@ class PlayState extends FlxState
 		if (FlxG.keys.anyJustReleased([LEFT, RIGHT]))
 		{
 			var sel = lists.indexOf(data.id);
+			var prevData = new TodoData(data.id);
 
 			if (lists.length > 1)
 			{
@@ -154,9 +137,13 @@ class PlayState extends FlxState
 				if (sel >= lists.length)
 					sel = lists.length - 1;
 
-				data = new TodoData(lists[sel]);
-				updateListEntriesText(true);
+				trace(lists[sel]);
 			}
+
+			data = new TodoData(lists[sel]);
+			trace(data.id);
+			if (data.id != prevData.id)
+				updateListEntriesText(true);
 		}
 	}
 
@@ -208,5 +195,12 @@ class PlayState extends FlxState
 		#if sys
 		File.saveContent('assets/lists/' + data.id + '.json', Json.stringify(data));
 		#end
+		if (listName != null)
+		{
+			listName.text = data.id;
+
+			if (data.entry_names.length < 1)
+				listName.text += ' (EMPTY)';
+		}
 	}
 }
