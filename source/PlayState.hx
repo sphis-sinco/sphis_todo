@@ -95,7 +95,10 @@ class PlayState extends FlxState
 		if (selected >= listEntriesText.members.length)
 			selected = listEntriesText.members.length - 1;
 		if (FlxG.keys.justReleased.R)
+		{
+			data = new TodoData(data.id);
 			updateListEntriesText();
+		}
 		if (FlxG.keys.justReleased.ENTER)
 		{
 			switch (data.entry_values[selected])
@@ -158,8 +161,6 @@ class PlayState extends FlxState
 
 	function updateListEntriesText()
 	{
-		data = new TodoData(data.id);
-
 		if (listEntriesText.members.length > 0)
 		{
 			for (text in listEntriesText.members)
